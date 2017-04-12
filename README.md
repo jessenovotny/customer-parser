@@ -21,7 +21,10 @@ Source CSV file shall be located in the `lib/assets` directory.
 
 running `rake parse:csv[customers-raw.csv,<optional_new_filename>]` will create a new file in the root directory named by the value provided as a second argument in the rake task or simply "parsed_customers-raw.csv" if no optional argument is provided.
 
-Note: Tests were performed with data provided in the challenge description. If another file is to be parsed with different headers, a slight adjustment should be made to `app/workers/csv_parser.rb:17`
+Note: Tests were performed with data provided in the challenge description. If another file is to be parsed, it's headers should be adjusted to match that of the sample data located in `lib/asstes/customers-raw.csv`.
+
+Note: The rake task described above will run the `#parse` method on `CsvParser`, which is located in `app/workers`. There you will find all logic associated with this operation.
+
 
 
 
