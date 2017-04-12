@@ -14,16 +14,20 @@ class CsvParser
 
 	def self.generate_customers customers_csv
 		customers = []
+		counter = 1
+		print "Parsing CSV\n"
 		customers_csv[6..-1].each do |row|
 			customer = Customer.new
+			print "#{counter}... "
+			counter += 1
 			row.each do |attribute, value|
 				case attribute
 				when "Cust Key"
 					customer.cust_key = value
 				when "Last Name"
-					customer.last_name = value
+					customer.last_name = value.capitalize unless value.blank?
 				when "First Name"
-					customer.first_name = value
+					customer.first_name = value.capitalize unless value.blank?
 				when "Birth Date"
 					customer.birthday = value
 				when "Age"
@@ -32,15 +36,16 @@ class CsvParser
 					customer.email = value
 				end
 			end
-				customers << customer
 			find_parents(customer, customers)
+			customers << customer
 		end
+		print "\n"
 		customers
 	end
 
 	def self.find_parents customer, customers
-		last_name = customer.last_name.split('-')
-		parent = customers.detect{|c| c.age > customer.age && c.last_name == last_name[0] || c.last_name == last_name[1] }
+		# last_name = customer.last_name.split('-')
+		parent = customers.detect{|c| c.age > customer.age && c.email == customer.email }
 		if parent
 			parent.children << customer 
 			customer.child = true
@@ -62,9 +67,14 @@ class CsvParser
 		headers = ["Last name", "First name", "Birthday", "Kid 1 First name", "Kid 1 Birthday", "Kid 2 First name", "Kid 2 Birthday", "Kid 3 First name", "Kid 3 Birthday"]
 		CSV.open(new_filename, 'w') do |csv|
 			csv << headers
+			print "Creating New CSV\n"
+			counter = 1
 			data.each do |row|
+				print "#{counter}... "
 				csv.puts row
-			end			
+				counter += 1
+			end
+			print "\nFINISHED!"
 		end
 	end
 
