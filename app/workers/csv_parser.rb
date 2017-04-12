@@ -69,11 +69,3 @@ class CsvParser
 	end
 
 end
-
-# input
-# ,Cust Key,,Last Name,,First Name,,,Birth Date,,Age,,Email Address
-# ,"96,185",,Test,,Test,,,1996-01-16,,20,,Test@Test.Test
-
-
-# desired output 
-# Last name, First name, Birthday, Kid 1 First name, Kid 1 Birthday, Kid 2 First name, Kid 2 Birthday, Kid 3 First name, Kid 3 Birthday
